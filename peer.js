@@ -6,12 +6,7 @@ var hashToPort = require('hash-to-port');
 var register = require('register-multicast-dns');
 var lookup = require('lookup-multicast-dns/global');
 
-var host = 'localhost';
-
-
 var toAddress = function  (username) { return username + '.local:' + hashToPort(username) }
-
-
 
 options
 	.option('--name [name]', 'Username')
@@ -36,13 +31,12 @@ register(options.name)
 swarm.on('connection', function(socket, peer) {
 	console.log(peer, ' is connected');
 
-
 	socket = jsonStream(socket);
 	sockets.add(socket);
 
 	socket.on('data', function(data) {
 
-		if (data.seq <= received[data.from]) return // already received this one
+		if (data.seq <= received[data.from]) return;
 		received[data.from] = data.seq
 
 		console.log(data.name, '>', data.message);
@@ -60,6 +54,3 @@ process.stdin.on('data', function(line) {
 	});
 
 });
-
-
-//var t1 = topology(thisHost, ['127.0.0.1:4002', '127.0.0.1:4003']);
