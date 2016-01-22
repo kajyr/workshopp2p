@@ -1,7 +1,8 @@
-var levelup = require('level')
-var db = levelup('./mydb')
+var levelup = require('level'),
+	db = levelup('./mydb')
 
-db.put('hellp', 'world', function (err) {
-  if (err) return console.log('Ooops!', err) // some kind of I/O error
-  	console.log('ok')
-})
+db.put('hello', 'world', err => {
+	if (err)
+		return console.log('Ooops!', err) // some kind of I/O error
+	console.log('ok');
+});
